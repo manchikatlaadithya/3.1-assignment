@@ -1,0 +1,146 @@
+//checked server before this coding and installed all required tools to perform this task
+
+//term.js
+
+const mongoose = require('mongoose');
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost/cric_db', {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
+
+// Define the Player schema
+const playerSchema = new mongoose.Schema({
+  name: String,
+  centuries: Number,
+  fifties: Number,
+  fours: Number,
+  sixes: Number,
+  score: Number,
+});
+
+// Create the Players data
+const Player = mongoose.model('Player', playerSchema);
+
+//sample data
+Player.insertMany([
+  {
+	 name: 'virat kohli',
+	 centuries: 15,
+ 	 fifties: 17,
+ 	 fours: 37,
+ 	 sixes: 21,
+ 	 score: 11023,
+  },
+  {
+    	 name: 'pujara',
+	 centuries: 12,
+ 	 fifties: 14,
+ 	 fours: 19,
+ 	 sixes: 29,
+ 	 score: 1452,
+  },
+
+  {
+	 name: 'ravindra',
+	 centuries: 0,
+ 	 fifties: 11,
+ 	 fours: 21,
+ 	 sixes: 12,
+ 	 score: 598,
+  },
+  {
+    	 name: 'jadeja',
+	 centuries: 13,
+ 	 fifties: 23,
+ 	 fours: 24,
+ 	 sixes: 19,
+ 	 score: 1073,
+  }
+]);
+
+// Perform queries
+async function performQueries() 
+
+{
+
+  // 1. Find the Player with the most centuries
+  const mostcenturies = await Player.findOne().sort('-centuries');
+  console.log('Player with the most centuries:', mostcenturies);
+
+  // 2. Find the Player with the most fifties
+  const mostfifties = await Player.findOne().sort('-fifties');
+  console.log('Player with the most fifties:', mostfifties);
+
+  // 3. Find the Player with the least centuries
+  const leastcenturies = await Player.findOne().sort('centuries');
+  console.log('Player with the least centuries:', leastcenturies);
+
+  // 4. Find the Player with the least fifties
+  const leastfifties = await Player.findOne().sort('fifties');
+  console.log('Find the Player with the least fifties:', leastfifties);
+
+  // 5. Find the Player with the highest score
+  const highestscore = await Player.findOne().sort('-score');
+  console.log('Player with the most highest score:', highestscore);
+}
+
+// Perform the queries
+performQueries();
+
+//node term.js (to perform queries in node.js)
+
+//output
+
+C:\Users\adithya\my-node-task>node term.js
+Player with the most centuries: {
+  _id: new ObjectId("652bab9fd95a34d676e840a4"),
+  name: 'virat kohli',
+  centuries: 15,
+  fifties: 17,
+  fours: 37,
+  sixes: 21,
+  score: 11023,
+  __v: 0
+}
+Player with the most fifties: {
+  _id: new ObjectId("652bab9fd95a34d676e840a7"),
+  name: 'jadeja',
+  centuries: 13,
+  fifties: 23,
+  fours: 24,
+  sixes: 19,
+  score: 1073,
+  __v: 0
+}
+Player with the least centuries: {
+  _id: new ObjectId("652baad98cb8c62503a5d896"),
+  name: 'ravindra',
+  centuries: 0,
+  fifties: 1,
+  fours: 21,
+  sixes: 12,
+  score: 298,
+  __v: 0
+}
+Find the Player with the least fifties: {
+  _id: new ObjectId("652baad98cb8c62503a5d896"),
+  name: 'ravindra',
+  centuries: 0,
+  fifties: 1,
+  fours: 21,
+  sixes: 12,
+  score: 298,
+  __v: 0
+}
+Player with the most highest score: {
+  _id: new ObjectId("652bab9fd95a34d676e840a4"),
+  name: 'virat kohli',
+  centuries: 15,
+  fifties: 17,
+  fours: 37,
+  sixes: 21,
+  score: 11023,
+  __v: 0
+}
